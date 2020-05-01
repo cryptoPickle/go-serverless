@@ -1,5 +1,4 @@
 function deploy_all() {
-    ls
     for d in $(find .. -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
       make deploy -C $d
     done
