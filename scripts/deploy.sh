@@ -1,12 +1,13 @@
 function deploy_all() {
-    for d in $(find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
+    ls
+    for d in $(find .. -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
       make deploy -C $d
     done
 }
 
 
-IS_COMMON_UPDATED=$(git diff-tree --no-commit-id --name-only -r 12d5d23 | grep "services/common" | wc -l)
-COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 5760b55)
+IS_COMMON_UPDATED=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA  | grep "services/common" | wc -l)
+COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 $GITHUB_SHA )
 
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
