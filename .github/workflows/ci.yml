@@ -30,21 +30,6 @@ jobs:
       with:
         fetch-depth: 10
 
-    - name: Debug
-      run: |
-        pwd
-        echo ${HOME}
-        echo ${GITHUB_WORKSPACE}
-        echo ${GOPATH}
-        echo ${GOROOT}
-        echo ${GITHUB_EVENT_PATH}
-
-    - name: Diff
-      run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
-
-    - name: ENV
-      run: env
-
     - name: Build
       uses: ./.github/actions/build
 

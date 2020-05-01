@@ -1,3 +1,4 @@
+echo "STARTING..."
 if [ $# -eq 0 ] ; then
   echo "Usage: ./build-deploy [buid|deploy]"
   exit 1
