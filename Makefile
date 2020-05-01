@@ -1,4 +1,4 @@
 build:
 	bash ./scripts/build-deploy.sh build
-build:
+deploy:
 	bash ./scripts/build-deploy.sh deploy
