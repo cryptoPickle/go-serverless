@@ -30,11 +30,6 @@ jobs:
       with:
         fetch-depth: 10
 
-    - name: Serverless
-      run: curl -o- -L https://slss.io/install | bash
-    - name: Serverless Prev
-      run: serverless
-
     - name: Debug
       run: |
         pwd
