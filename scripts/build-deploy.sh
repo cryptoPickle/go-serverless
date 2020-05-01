@@ -1,6 +1,12 @@
+if [ $# -eq 0 ] ; then
+  echo "Usage: ./build-deploy [buid|deploy]"
+  exit 1
+fi
+
+ACTION=$1
 function deploy_all() {
     for d in $(find . -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
-      make deploy -C $d
+      if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
     done
 }
 
@@ -23,7 +29,7 @@ while read line ; do
   if [ -d "../$line" ]; then
     if [ -f "../$line/serverless.yml" ] ; then
       echo "deploying $line ..."
-      make deploy  -C "../$line"
+       if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
     fi
   fi
 done
