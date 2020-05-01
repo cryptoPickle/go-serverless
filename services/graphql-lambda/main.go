@@ -4,7 +4,7 @@ import (
   "context"
   "encoding/json"
   "errors"
-  "github.com/cryptoPickle/go-serverless/services/graphql-lambda/schemas"
+  "github.com/cryptoPickle/go-serverless/services/common/schemas"
   "log"
 
   "github.com/aws/aws-lambda-go/events"

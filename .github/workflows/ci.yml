@@ -48,16 +48,11 @@ jobs:
             dep ensure
         fi
     - name: Diff
-      run: cd go; git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
-    - name: get changed files
-      id: getfile
-      run: |
-        cd go
-        echo "::set-output name=files::$(git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | xargs)"
+      run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }}
 
-    - name: echo output
-      run: |
-        echo ${{ steps.getfile.outputs.files }}
+    - name: ENV
+      run: env
+
     - name: Build
-      run: make build -C go
+      run: ../scripts/deploy.sh ${{ github.sha }}
 
