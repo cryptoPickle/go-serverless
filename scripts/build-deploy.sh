@@ -26,10 +26,11 @@ fi
 git diff-tree --no-commit-id --name-only -r $GITHUB_SHA |
 grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
 while read line ; do
-  if [ -d "../$line" ]; then
-    if [ -f "../$line/serverless.yml" ] ; then
+  if [ -d "$line" ]; then
+    echo $line
+    if [ -f "$line/serverless.yml" ] ; then
       echo "deploying $line ..."
-       if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
+       if [ "$ACTION" == "build" ] ; then make build -C $line ; else  make deploy -C $line ; fi
     fi
   fi
 done
