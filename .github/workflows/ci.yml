@@ -31,10 +31,7 @@ jobs:
         fetch-depth: 10
 
     - name: Serverless
-      uses: serverless/github-action@v1.53.0
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: curl -o- -L https://slss.io/install | bash
 
     - name: Debug
       run: |
