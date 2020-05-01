@@ -46,5 +46,5 @@ jobs:
       run: env
 
     - name: Build
-      run: cd go; ls
+      run: ls
 
