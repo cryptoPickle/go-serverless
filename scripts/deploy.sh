@@ -8,3 +8,5 @@ while read line ; do
     fi
   fi
 done
+
+#git diff-tree --no-commit-id --name-only -r $GITHUB_SHA | grep

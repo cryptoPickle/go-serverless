@@ -11,6 +11,11 @@ var Schema = `
 		firstName: String!
 		lastName: String
 	}
+  type Person2{
+		id: ID!
+		firstName: String!
+		lastName: String
+	}
 	type Query{
 		person(id: ID!): Person
 	}
