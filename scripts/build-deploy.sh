@@ -8,7 +8,7 @@ ACTION=$1
 
 IS_COMMON_UPDATED=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA  | grep "services/common" | wc -l)
 COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 $GITHUB_SHA )
-
+echo "MESSAGE $COMMIT_MESSAGE"
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
   for d in $(find . -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
