@@ -51,5 +51,5 @@ jobs:
       run: env
 
     - name: Build
-      uses: ../actions/build
+      uses: ./.github/actions/build
 
