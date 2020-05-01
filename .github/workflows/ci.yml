@@ -46,5 +46,5 @@ jobs:
       run: env
 
     - name: Build
-      run: ../scripts/deploy.sh ${{ github.sha }}
+      run: cd go; ./scripts/deploy.sh
 

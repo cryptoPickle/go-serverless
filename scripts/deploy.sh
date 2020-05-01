@@ -1,4 +1,4 @@
-git diff-tree --no-commit-id --name-only -r $1 |
+git diff-tree --no-commit-id --name-only -r $GITHUB_SHA |
 grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
 while read line ; do
   if [ -d "../$line" ]; then
