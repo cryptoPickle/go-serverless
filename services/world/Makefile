@@ -1,11 +1,11 @@
 .PHONY: build clean deploy
 
-build:
+build: clean
 	export GO111MODULE=on
 	env GOOS=linux go build -ldflags="-s -w" -o bin/world main.go
 
 clean:
 	rm -rf ./bin ./vendor Gopkg.lock
 
-deploy: clean build
+deploy:
 	sls deploy --verbose

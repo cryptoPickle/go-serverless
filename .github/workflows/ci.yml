@@ -31,5 +31,8 @@ jobs:
         fetch-depth: 10
 
     - name: Build
-      uses: ./.github/actions/build
+      run: make build
+
+    - name: Serverless Deploy
+      uses: ./.github/actions/deploy
 
