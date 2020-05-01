@@ -5,23 +5,22 @@ if [ $# -eq 0 ] ; then
 fi
 
 ACTION=$1
-function deploy_all() {
-    for d in $(find . -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
-      if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
-    done
-}
 
 IS_COMMON_UPDATED=$(git diff-tree --no-commit-id --name-only -r $GITHUB_SHA  | grep "services/common" | wc -l)
 COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 $GITHUB_SHA )
 
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
-  deploy_all
+  for d in $(find . -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
+      if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
+  done
 fi
 
 if [ "$COMMIT_MESSAGE" == "[ redeploy-all ]" ] ; then
   echo "Re-deploy requested, re-deploying all services..."
-  deploy_all
+  for d in $(find . -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
+      if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
+  done
 fi
 
 git diff-tree --no-commit-id --name-only -r $GITHUB_SHA |
