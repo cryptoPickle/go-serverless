@@ -18,3 +18,4 @@ EOD
 )
 
 echo "$CONTENT" > go.mod
+
