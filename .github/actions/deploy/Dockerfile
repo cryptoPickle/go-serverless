@@ -13,4 +13,4 @@ LABEL "com.github.actions.color"="red"
 
 RUN npm i -g serverless@1.54.0
 
-CMD make deploy
+CMD bash ./script/build-deploy.sh deploy
