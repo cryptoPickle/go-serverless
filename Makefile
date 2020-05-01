@@ -1,2 +1,2 @@
 build:
-	./scripts/build-deploy.sh build
+	bash ./scripts/build-deploy.sh build
