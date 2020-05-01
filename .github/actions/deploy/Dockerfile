@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:10-slim
 
 
 LABEL version="1.0.0"
@@ -11,7 +11,10 @@ LABEL "com.github.actions.description"="Wraps the Serverless Framework to enable
 LABEL "com.github.actions.icon"="zap"
 LABEL "com.github.actions.color"="red"
 
+COPY . .
+
+RUN ls
 
 RUN npm i -g serverless@1.54.0
 
-CMD make build
+CMD make deploy
