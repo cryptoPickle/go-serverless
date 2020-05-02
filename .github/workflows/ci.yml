@@ -31,9 +31,8 @@ jobs:
         fetch-depth: 10
 
     - name: Build
-      run: make build
-    - name: npm
-      run: npm
+      run: bash ./scripts/build-deploy.sh build
+
     - name: Serverless Deploy
       uses: ./.github/actions/deploy
       env:
