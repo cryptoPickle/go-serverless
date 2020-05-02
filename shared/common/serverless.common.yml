@@ -1,0 +1,13 @@
+custom:
+  region: eu-west-1
+  stage: ${opt:stage, self:provider.stage}
+  resourcesStages:
+    dev: dev
+  resourcesStage: ${self:custom.resourcesStages.${self:custom.stage}, self:custom.resourcesStages.dev}
+
+lambdaPolicyXray:
+  Effect: Allow
+  Action:
+    - xray:PutTraceSegments
+    - xray:PutTelemetryRecords
+  Resource: "*"

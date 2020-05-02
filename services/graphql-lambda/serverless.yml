@@ -3,17 +3,29 @@ service: go-serverless
 frameworkVersion: '>=1.28.0 <2.0.0'
 
 
+custom: ${file(../../shared/common/serverless.common.yml):custom}
 
-provider:
-  name: aws
-  runtime: go1.x
-  region: eu-west-1
-  stage: dev
 package:
+  individually: true
   exclude:
     - ./**
   include:
     - ./bin/**
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: ${self:custom.region}
+  stage: dev
+  tracing:
+    apiGateway: true
+    lambda: true
+  environment:
+    stage: ${self:custom.stage}
+    resourcesStage: ${self:custom.resourcesStage}
+  iamRoleStatements:
+    - ${file(../../shared/common/serverless.common.yml):lambdaPolicyXray}
+
 
 functions:
   graphql:
@@ -23,12 +35,19 @@ functions:
           path: graphql-lambda
           method: post
 
-plugins:
-  - serverless-domain-manager
 
-custom:
-  customDomain:
-    domainName: ribbonex.com
-    basePath: home
-    stage: dev
-    createRoute53Record: true
+resources:
+  - $(../../shared/resources/api-gateway-errors.yml)}
+  - Outputs:
+      ApiGatewayRestApiId:
+        Value:
+          Ref: RibbonExRestApi
+        Export:
+          Name: ${self:custom.stage}-ExtApiGatewayRestApiId
+      ApiGatewayRestApiRootResourceId:
+        Value:
+          Fn::GetAtt:
+            - RibbonExRestApi
+            - RootResourceId
+        Export:
+          Name: ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId
