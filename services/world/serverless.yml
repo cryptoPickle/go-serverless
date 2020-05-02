@@ -28,7 +28,7 @@ plugins:
 
 custom:
   customDomain:
-    domainName: 'ribbonex.com'
-    basePath: 'world'
-    stage: "dev"
+    domainName: ribbonex.com
+    basePath: world
+    stage: dev
     createRoute53Record: true

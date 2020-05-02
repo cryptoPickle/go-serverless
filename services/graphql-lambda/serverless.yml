@@ -9,8 +9,6 @@ provider:
   runtime: go1.x
   region: eu-west-1
   stage: dev
-  environment:
-    SERVICE_NAME: ${self.service}
 package:
   exclude:
     - ./**
@@ -30,7 +28,7 @@ plugins:
 
 custom:
   customDomain:
-    domainName: 'ribbonex.com'
-    basePath: 'home'
-    stage: "dev"
+    domainName: ribbonex.com
+    basePath: home
+    stage: dev
     createRoute53Record: true
