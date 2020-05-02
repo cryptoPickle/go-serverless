@@ -1,5 +1,5 @@
 
-service: go-serverless
+service: hello
 
 frameworkVersion: '>=1.28.0 <2.0.0'
 

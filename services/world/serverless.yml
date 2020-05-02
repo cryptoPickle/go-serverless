@@ -1,4 +1,4 @@
-service: go-serverless
+service: world
 
 frameworkVersion: '>=1.28.0 <2.0.0'
 
