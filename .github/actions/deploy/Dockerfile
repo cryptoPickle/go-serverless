@@ -11,7 +11,7 @@ LABEL "com.github.actions.description"="Wraps the Serverless Framework to enable
 LABEL "com.github.actions.icon"="zap"
 LABEL "com.github.actions.color"="red"
 
-COPY ../../../. ./test
+COPY . ./test
 
 RUN ls
 RUN cd ./test
@@ -19,4 +19,4 @@ RUN cd ./test
 RUN npm i -g serverless@1.54.0
 
 
-CMD bash ../../../scripts/build-deploy.sh deploy
+CMD bash ./scripts/build-deploy.sh deploy
