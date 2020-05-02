@@ -2,7 +2,7 @@
 
 build: clean
 	export GO111MODULE=on
-	env GOOS=linux go build -ldflags="-s -w" -o bin/graphql main.go
+	env GOOS=linux go build  -ldflags '-d -s -w' -a  -o bin/graphql main.go
 
 clean:
 	rm -rf ./bin ./vendor Gopkg.lock
