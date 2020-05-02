@@ -28,7 +28,7 @@ plugins:
 
 custom:
   customDomain:
-    domainName: 'api.denemetest.com'
+    domainName: 'ribbonex.com'
     basePath: 'hello'
     stage: "dev"
-    createRoute53Record: false
+    createRoute53Record: true
