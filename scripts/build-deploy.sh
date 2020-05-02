@@ -26,6 +26,7 @@ fi
 git diff-tree --no-commit-id --name-only -r $GITHUB_SHA |
 grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
 while read line ; do
+  echo "$line"
   if [ -d "$line" ]; then
     echo $line
     if [ -f "$line/serverless.yml" ] ; then
