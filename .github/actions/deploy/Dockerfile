@@ -14,7 +14,6 @@ LABEL "com.github.actions.color"="red"
 COPY ../../../. ./test
 
 RUN ls
-
 RUN cd ./test
 
 RUN npm i -g serverless@1.54.0
