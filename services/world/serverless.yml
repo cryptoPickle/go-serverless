@@ -20,3 +20,13 @@ functions:
       - http:
           path: world
           method: get
+
+plugins:
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: 'api.denemetest.com'
+    basePath: 'world'
+    stage: ${self.provider.stage}
+    createRoute53Record: false

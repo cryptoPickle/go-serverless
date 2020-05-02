@@ -30,6 +30,9 @@ jobs:
       with:
         fetch-depth: 10
 
+    - name: Install Serverless Plugins
+      run: npm i
+
     - name: Build
       run: bash ./scripts/build-deploy.sh build
 
