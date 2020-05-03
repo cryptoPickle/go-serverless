@@ -36,6 +36,6 @@ functions:
     handler: bin/world
     events:
       - http:
-          path: hello
+          path: world
           method: get
 
