@@ -14,4 +14,4 @@ lambdaPolicyXray:
 
 commonResources:
   # API GATEWAY ERRORS
-  - ${file(../../shared/resources/agw/api-gateway-errors.yml)}
+   - ${file(../../shared/resources/agw/api-gateway-errors.yml)}

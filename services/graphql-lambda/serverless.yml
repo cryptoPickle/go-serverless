@@ -2,6 +2,8 @@
 service: go-serverless
 frameworkVersion: '>=1.28.0 <2.0.0'
 
+.commonconfig: &commonconfig
+  ${file(../../shared/common/serverless.common.yml):commonResources}
 
 custom: ${file(../../shared/common/serverless.common.yml):custom}
 
@@ -37,6 +39,6 @@ functions:
 
 
 resources:
-  - ${file(../../shared/common/serverless.common.yml):commonResources}
+  - *commonconfig
   #  Create Base API, rest of the services depends on this service, deploy first
   - ${file(../../shared/resources/agw/base_api.yml)}

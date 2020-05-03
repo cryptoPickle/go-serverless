@@ -10,4 +10,4 @@ Outputs:
         - ApiGatewayRestApi
         - RootResourceId
     Export:
-      Name: ${self:custom.stage}-Ext
+      Name: ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId

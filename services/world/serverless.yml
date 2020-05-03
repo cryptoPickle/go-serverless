@@ -2,6 +2,8 @@
 service: world
 frameworkVersion: '>=1.28.0 <2.0.0'
 
+.commonconfig: &commonconfig
+  ${file(../../shared/common/serverless.common.yml):commonResources}
 
 custom: ${file(../../shared/common/serverless.common.yml):custom}
 
@@ -37,4 +39,4 @@ functions:
           method: get
 
 resources:
-  - ${file(../../shared/common/serverless.common.yml):commonResources}
+  - *commonconfig
