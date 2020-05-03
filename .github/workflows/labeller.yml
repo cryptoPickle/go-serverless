@@ -9,21 +9,4 @@ jobs:
     - uses: actions/labeler@v3
       with:
         repo-token: "${{secrets.GITHUB_TOKEN}}"
-
-        repo:
-          - ./*
-        shared:
-           - shared/*
-           - shared/**/*
-        services:
-           - services/*
-           - services/**/*
-        common:
-           - services/common/*
-           - services/common/*/**
-        ci:
-           - .github/*
-           - .github/**/*
-        scripts:
-           - scripts/*
-           - scripts/*/**
+      configuration-path: .github/actions/labels.yml

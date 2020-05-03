@@ -1,0 +1,17 @@
+repo:
+  - ./*
+@domain/shared:
+  - shared/*
+  - shared/**/*
+@domain/services:
+  - services/*
+  - services/**/*
+@domain/common:
+  - services/common/*
+  - services/common/*/**
+@domain/ci:
+  - .github/*
+  - .github/**/*
+@domain/scripts:
+  - scripts/*
+  - scripts/*/**
