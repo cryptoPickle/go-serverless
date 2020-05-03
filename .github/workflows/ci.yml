@@ -30,14 +30,15 @@ jobs:
         fetch-depth: 10
 
     - name: Install Serverless Plugins
-      run: npm i
+      run: npm i serverless -g
 
     - name: Build
       run: bash ./scripts/build-deploy.sh build
 
     - name: Serverless Deploy
-      uses: ./.github/actions/deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      uses: git diff --name-only ${{ github.event.before }} ${{ github.sha }}
 
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
