@@ -12,18 +12,18 @@ jobs:
 
         repo:
           - ./*
-        @domain/shared:
+        shared:
            - shared/*
            - shared/**/*
-        @domain/services:
+        services:
            - services/*
            - services/**/*
-        @domain/common:
+        common:
            - services/common/*
            - services/common/*/**
-        @domain/ci:
+        ci:
            - .github/*
            - .github/**/*
-        @domain/scripts:
+        scripts:
            - scripts/*
            - scripts/*/**
