@@ -12,7 +12,7 @@ function buildeploy() {
   done
 }
 
-IS_COMMON_UPDATED=$(git diff --name-only  $2..$3 | grep "services/common" | wc -l)
+IS_COMMON_UPDATED=$(git diff --name-only  $2 $3 | grep "services/common" | wc -l)
 COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 $GITHUB_SHA )
 echo "MESSAGE $COMMIT_MESSAGE"
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
@@ -25,7 +25,7 @@ if [ "$COMMIT_MESSAGE" == "[ redeploy-all ]" ] ; then
   buildeploy
 fi
 
-git diff --name-only  $2..$3 |
+git diff --name-only  $2 $3 |
 grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
 while read line ; do
   echo "$line"
