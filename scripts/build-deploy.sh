@@ -25,7 +25,7 @@ if [ "$COMMIT_MESSAGE" == "[ redeploy-all ]" ] ; then
   buildeploy
 fi
 
-git git diff --name-only  $2..$3 |
+git diff --name-only  $2..$3 |
 grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
 while read line ; do
   echo "$line"
