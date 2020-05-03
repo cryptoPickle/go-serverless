@@ -20,10 +20,7 @@ provider:
   tracing:
     lambda: true
   apiGateway:
-    restApiId:
-      'Fn::ImportValue': ${self:custom.stage}-ExtApiGatewayRestApiId
-    restApiRootResourceId:
-      'Fn::ImportValue': ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId
+    ${file(../../shared/resources/agw/agwId.yml):apiGateway}
   environment:
     stage: ${self:custom.stage}
     resourcesStage: ${self:custom.resourcesStage}
@@ -39,3 +36,5 @@ functions:
           path: world
           method: get
 
+resources:
+  - ${file(../../shared/common/serverless.common.yml):commonResources}

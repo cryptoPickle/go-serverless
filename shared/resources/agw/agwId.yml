@@ -1,0 +1,5 @@
+apiGateway:
+  restApiId:
+    'Fn::ImportValue': ${self:custom.stage}-ExtApiGatewayRestApiId
+  restApiRootResourceId:
+    'Fn::ImportValue': ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId

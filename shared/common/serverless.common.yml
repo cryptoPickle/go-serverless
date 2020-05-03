@@ -11,3 +11,7 @@ lambdaPolicyXray:
     - xray:PutTraceSegments
     - xray:PutTelemetryRecords
   Resource: "*"
+
+commonResources:
+  # API GATEWAY ERRORS
+  - ${file(../../shared/resources/agw/api-gateway-errors.yml)}
