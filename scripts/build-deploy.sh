@@ -35,5 +35,3 @@ while read line ; do
     fi
   fi
 done
-
-
