@@ -36,7 +36,7 @@ jobs:
       run: bash ./scripts/build-deploy.sh build
 
     - name: Serverless Deploy
-      uses: git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+      run: git diff --name-only ${{ github.event.before }} ${{ github.sha }}
 
     - name: Dump GitHub context
       env:
