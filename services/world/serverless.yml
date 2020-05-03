@@ -1,34 +1,41 @@
-service: world
 
+service: world
 frameworkVersion: '>=1.28.0 <2.0.0'
 
-provider:
-  name: aws
-  runtime: go1.x
-  region: eu-west-1
-  stage: dev
 
+custom: ${file(../../shared/common/serverless.common.yml):custom}
 
 package:
+  individually: true
   exclude:
     - ./**
   include:
     - ./bin/**
 
+provider:
+  name: aws
+  runtime: go1.x
+  region: ${self:custom.region}
+  stage: dev
+  tracing:
+    lambda: true
+  apiGateway:
+    restApiId:
+      'Fn::ImportValue': ${self:custom.stage}-ExtApiGatewayRestApiId
+    restApiRootResourceId:
+      'Fn::ImportValue': ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId
+  environment:
+    stage: ${self:custom.stage}
+    resourcesStage: ${self:custom.resourcesStage}
+  iamRoleStatements:
+    - ${file(../../shared/common/serverless.common.yml):lambdaPolicyXray}
+
+
 functions:
-  world:
+  hello:
     handler: bin/world
     events:
       - http:
-          path: world
+          path: hello
           method: get
 
-plugins:
-  - serverless-domain-manager
-
-custom:
-  customDomain:
-    domainName: ribbonex.com
-    basePath: world
-    stage: dev
-    createRoute53Record: true

@@ -37,17 +37,17 @@ functions:
 
 
 resources:
-  - $(../../shared/resources/api-gateway-errors.yml)}
+  - ${file(../../shared/resources/api-gateway-errors.yml)}
   - Outputs:
       ApiGatewayRestApiId:
         Value:
-          Ref: RibbonExRestApi
+          Ref: ApiGatewayRestApi
         Export:
           Name: ${self:custom.stage}-ExtApiGatewayRestApiId
       ApiGatewayRestApiRootResourceId:
         Value:
           Fn::GetAtt:
-            - RibbonExRestApi
+            - ApiGatewayRestApi
             - RootResourceId
         Export:
           Name: ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId
