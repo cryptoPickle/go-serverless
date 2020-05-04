@@ -19,6 +19,7 @@ provider:
   runtime: go1.x
   region: ${self:custom.region}
   stage: dev
+  profile: ${self:custom.profiles.${self:provider.stage}}
   apiGateway:
     ${file(../../shared/resources/agw/agwId.yml):apiGateway}
   tracing:

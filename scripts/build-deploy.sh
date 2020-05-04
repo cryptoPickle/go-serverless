@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 cd "$(dirname "$0")"
 if [ $# -eq 0 ] ; then
@@ -6,8 +7,9 @@ if [ $# -eq 0 ] ; then
 fi
 
 ACTION=$1
+
 IS_COMMON_UPDATED=$(git diff --name-only  "$2" "$3" | grep -e "services/common" -e "shared/deployments" | wc -l)
-COMMIT_MESSAGE=$(git log --format=%B -n 1 "$GITHUB_SHA" | grep  -F '[ redeploy-all ]' | wc -l )
+IS_REDEPLOY=$(git log --format=%B -n 1 "$GITHUB_SHA" | grep  -F '[ redeploy-all ]' | wc -l )
 
 function deployResources(){
   find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
@@ -41,7 +43,7 @@ if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   exit 0
 fi
 
-if [ $COMMIT_MESSAGE -gt 0 ] ; then
+if [ $IS_REDEPLOY -gt 0 ] ; then
   echo "Re-deploy requested, re-deploying all services..."
   if [ "$ACTION" == "build" ]; then
      buildServices

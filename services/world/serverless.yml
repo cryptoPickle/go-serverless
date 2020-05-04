@@ -18,6 +18,7 @@ provider:
   name: aws
   runtime: go1.x
   region: ${self:custom.region}
+  profile: ${self:custom.profiles.${self:provider.stage}}
   stage: dev
   tracing:
     lambda: true

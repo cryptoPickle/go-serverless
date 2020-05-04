@@ -20,6 +20,7 @@ provider:
   runtime: go1.x
   region: ${self:custom.region}
   stage: dev
+  profile: ${self:custom.profiles.${self:provider.stage}}
   tracing:
     lambda: true
   apiGateway:
