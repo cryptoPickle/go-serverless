@@ -21,9 +21,13 @@ jobs:
         fetch-depth: 10
 
     - name: Lint
-      run: echo "::set-output name=lintOutput::$(golangci-lint run)"
+      run: echo "::set-output name=lintOutput::$(./bin/golangci-lint run)"
       id: lint
 
+    - name: Lint
+      run: echo ${{steps.lint.outputs.lintOutput}}
+      id: lint2
+      
     - name: Comment PR
       uses: unsplash/comment-on-pr@master
       env:
