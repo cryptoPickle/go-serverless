@@ -1,7 +1,7 @@
 package main
 
 import (
-  "bytes"
+	"bytes"
 	"context"
 	"encoding/json"
 
@@ -13,6 +13,8 @@ import (
 // AWS Lambda Proxy Request functionality (default behavior)
 //
 // https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
+var badname int
+
 type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
