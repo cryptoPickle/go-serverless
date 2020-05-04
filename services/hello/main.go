@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"github.com/cryptoPickle/go-serverless/services/common/constants"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -23,12 +24,12 @@ func Handler(ctx context.Context) (Response, error) {
 		"message": "Go Serverless v1.0! Your function executed successfully!",
 	})
 	if err != nil {
-		return Response{StatusCode: 404}, err
+		return Response{StatusCode: constants.StatusCodes["NotFound"]}, err
 	}
 	json.HTMLEscape(&buf, body)
 
 	resp := Response{
-		StatusCode:      200,
+		StatusCode:      constants.StatusCodes["Ok"],
 		IsBase64Encoded: false,
 		Body:            buf.String(),
 		Headers: map[string]string{

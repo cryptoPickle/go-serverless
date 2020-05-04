@@ -59,9 +59,6 @@ linters-settings:
       - NOTE
       - OPTIMIZE # marks code that should be optimized before merging
       - HACK # marks hack-arounds that should be removed before merging
-  gofmt:
-    # simplify code: gofmt with `-s` option, true by default
-    simplify: true
   goimports:
     local-prefixes: github.com/cryptopickle/go-serverless
   golint:
@@ -111,7 +108,6 @@ linters:
     - goconst
     - gocritic
     - gocyclo
-    - gofmt
     - goimports
     - golint
     - gomnd
