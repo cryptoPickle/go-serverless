@@ -3,6 +3,9 @@ repo:
 shared:
   - shared/*
   - shared/**/*
+shared-deployment:
+  - shared/deployments/*
+  - shared/deployments/**
 service:
   - services/*.go
   - services/**/*.go
