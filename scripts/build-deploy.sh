@@ -29,21 +29,26 @@ function deployServices(){
 }
 
 
-
-
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
-  deployResources
-  buildServices
-  deployServices
+  if [ "$ACTION" == "build" ]; then
+     buildServices
+    else
+      deployResources
+      deployServices
+  fi
+
   exit 0
 fi
 
 if [ $COMMIT_MESSAGE -gt 0 ] ; then
   echo "Re-deploy requested, re-deploying all services..."
-  deployResources
-  buildServices
-  deployServices
+  if [ "$ACTION" == "build" ]; then
+     buildServices
+    else
+      deployResources
+      deployServices
+  fi
   exit 0
 fi
 
