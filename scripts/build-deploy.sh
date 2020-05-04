@@ -6,32 +6,44 @@ if [ $# -eq 0 ] ; then
 fi
 
 ACTION=$1
+IS_COMMON_UPDATED=$(git diff --name-only  "$2" "$3" | grep -e "services/common" -e "shared/deployments" | wc -l)
+COMMIT_MESSAGE=$(git log --format=%B -n 1 "$GITHUB_SHA" | grep  -F '[ redeploy-all ]' | wc -l )
 
-
-function buildeploy() {
-  echo "here"
-  for d in $(find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
-    if [ "$ACTION" == "build" ] ; then echo "..." ; else cd "$d" ; sls deploy; fi
+function deployResources(){
+  find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
+    echo $directory
+    cd "$directory" ; sls deploy;
   done
-  cd - > /dev/null
-  for d in $(find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
-    if [ "$ACTION" == "build" ] ; then make build -C "$d" ; else  make deploy -C "$d" ; fi
+}
+
+function buildServices(){
+  find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
+    make build -C "$directory"
+  done
+}
+
+function deployServices(){
+  find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
+    make deploy -C "$directory"
   done
 }
 
 
 
-echo $IS_COMMON_UPDATED
-echo $COMMIT_MESSAGE
-if [[ $IS_COMMON_UPDATED -gt 0 ]] ; then
+
+if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
-  buildeploy
+  deployResources
+  buildServices
+  deployServices
   exit 0
 fi
 
-if [[ $COMMIT_MESSAGE -gt 0 ]] ; then
+if [ $COMMIT_MESSAGE -gt 0 ] ; then
   echo "Re-deploy requested, re-deploying all services..."
-  buildeploy
+  deployResources
+  buildServices
+  deployServices
   exit 0
 fi
 
