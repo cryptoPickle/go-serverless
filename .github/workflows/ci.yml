@@ -33,7 +33,7 @@ jobs:
       run: sudo npm i serverless -g
 
     - name: Build
-      run: bash ./scripts/build-deploy.sh build
+      run: bash ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
 
     - name: Dump GitHub context
       env:
