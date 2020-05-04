@@ -4,12 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-  "github.com/cryptoPickle/go-serverless/services/common/constants"
-  "github.com/cryptoPickle/go-serverless/services/common/schemas"
 	"log"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/cryptoPickle/go-serverless/services/common/constants"
+	"github.com/cryptoPickle/go-serverless/services/common/schemas"
 )
 
 var (

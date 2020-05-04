@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/cryptoPickle/go-serverless/services/common/constants"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/cryptoPickle/go-serverless/services/common/constants"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the

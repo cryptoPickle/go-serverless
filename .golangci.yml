@@ -63,10 +63,6 @@ linters-settings:
     local-prefixes: github.com/cryptopickle/go-serverless
   golint:
     min-confidence: 0.8
-  gomnd:
-    settings:
-      mnd:
-        checks: argument,case,condition,operation
   govet:
     check-shadowing: true
     settings:
@@ -110,7 +106,6 @@ linters:
     - gocyclo
     - goimports
     - golint
-    - gomnd
     - goprintffuncname
     - gosec
     - gosimple
