@@ -8,4 +8,4 @@ clean:
 	rm -rf ./bin ./vendor Gopkg.lock
 
 deploy:
-	sls deploy --verbose
+	sudo sls deploy --verbose
