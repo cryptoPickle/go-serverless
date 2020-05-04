@@ -41,5 +41,5 @@ jobs:
       run: echo "$GITHUB_CONTEXT"
 
     - name: Serverless Deploy
-      run: bash ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
+      run: sudo bash ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
 

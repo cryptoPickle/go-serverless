@@ -1,4 +1,5 @@
-echo "STARTING..."
+set -e
+cd "$(dirname "$0")"
 if [ $# -eq 0 ] ; then
   echo "Usage: ./build-deploy [buid|deploy] sha1 sha2"
   exit 1
@@ -6,8 +7,13 @@ fi
 
 ACTION=$1
 
+
 function buildeploy() {
-  for d in $(find . -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
+  for d in $(find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
+    if [ "$ACTION" == "build" ] ; then echo "..." ; else cd $d || exit 1 ; sls deploy; fi
+  done
+  cd - > /dev/null
+  for d in $(find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
     if [ "$ACTION" == "build" ] ; then make build -C $d ; else  make deploy -C $d ; fi
   done
 }
@@ -20,11 +26,13 @@ echo "MESSAGE $COMMIT_MESSAGE"
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
   buildeploy
+  exit 0
 fi
 
 if [ "$COMMIT_MESSAGE" == "[ redeploy-all ]" ] ; then
   echo "Re-deploy requested, re-deploying all services..."
   buildeploy
+  exit 0
 fi
 
 git diff --name-only  $2 $3 |
