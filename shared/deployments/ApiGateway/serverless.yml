@@ -1,0 +1,30 @@
+service: Gateway
+
+custom: ${file(../../common/serverless.common.yml):custom}
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: ${self:custom.region}
+
+resources:
+  Resources:
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: ApiGatewayRestApi
+
+  Outputs:
+    apiGatewayRestApiId:
+      Value:
+        Ref: ApiGatewayRestApi
+      Export:
+        Name: ${self:custom.stage}-ExtApiGatewayRestApiId
+
+    apiGatewayRestApiRootResourceId:
+      Value:
+        Fn::GetAtt:
+          - ApiGatewayRestApi
+          - RootResourceId
+      Export:
+        Name: ${self:custom.stage}-ExtApiGatewayRestApiRootResourceId
