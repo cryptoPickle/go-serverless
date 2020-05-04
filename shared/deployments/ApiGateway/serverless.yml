@@ -7,6 +7,7 @@ provider:
   runtime: go1.x
   region: ${self:custom.region}
 
+
 resources:
   Resources:
     ApiGatewayRestApi:
