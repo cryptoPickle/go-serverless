@@ -5,7 +5,7 @@
 run:
 
   # exit code when at least one issue was found, default is 1
-  issues-exit-code: 1
+  issues-exit-code: 0
 
   skip-dirs:
     - src/external_libs
