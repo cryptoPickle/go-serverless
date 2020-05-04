@@ -1,6 +1,8 @@
 custom:
   region: eu-west-1
   stage: ${opt:stage, self:provider.stage}
+  profiles:
+    dev: default
   resourcesStages:
     dev: dev
   resourcesStage: ${self:custom.resourcesStages.${self:custom.stage}, self:custom.resourcesStages.dev}
