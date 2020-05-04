@@ -13,6 +13,17 @@ jobs:
       with:
         repo-token: "${{secrets.GITHUB_TOKEN}}"
         configuration-path: .github/actions/pull/labels.yml
+  go-fmt:
+    name: Imports
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: check
+        uses: grandcolline/golang-github-actions@v1.1.0
+        with:
+          run: fmt
+          comment: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   golangci-lint:
     name: runner / golangci-lint

@@ -13,7 +13,7 @@ import (
 
 
 var (
-  QueryNameNotProvided = errors.New("no query was provided in the HTTP body")
+  ErrQueryNameNotProvided = errors.New("no query was provided in the HTTP body")
 )
 
 type Response events.APIGatewayProxyResponse
@@ -22,7 +22,7 @@ func Handler(ctx context.Context, request events.APIGatewayProxyRequest) (Respon
   log.Printf("Lambda request %s\n", request.RequestContext.RequestID)
 
   if len(request.Body) < 1 {
-    return Response{}, QueryNameNotProvided
+    return Response{}, ErrQueryNameNotProvided
   }
 
   var params struct{

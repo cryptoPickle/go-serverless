@@ -10,7 +10,7 @@ import (
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the
-// AWS Lambda Proxy Request functionality (default behavior)
+// AWS Lambda Proxy Request functionality (default behaviour)
 //
 // https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
 
