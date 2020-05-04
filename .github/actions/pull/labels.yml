@@ -4,8 +4,11 @@ shared:
   - shared/*
   - shared/**/*
 service:
-  - services/*
-  - services/**/*
+  - services/*.go
+  - services/**/*.go
+service-deployments:
+  - services/*.yml
+  - services/**/*.yml
 common:
   - services/common/*
   - services/common/*/**
