@@ -9,7 +9,7 @@ fi
 ACTION=$1
 
 IS_COMMON_UPDATED=$(git diff --name-only  "$2" "$3" | grep -e "services/common" -e "shared/deployments" | wc -l)
-IS_REDEPLOY=$(git log --format=%B -n 1 "$GITHUB_SHA" | grep  -F '[ redeploy-all ]' | wc -l )
+IS_REDEPLOY=$(git log --format=%B -n 1 $3 | grep  -F '[ redeploy-all ]' | wc -l )
 
 function deployResources(){
   find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
