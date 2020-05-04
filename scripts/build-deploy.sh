@@ -30,7 +30,7 @@ function deployServices(){
   done
 }
 
-
+# If common packages or services updated, all services re deploys
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
   if [ "$ACTION" == "build" ]; then
@@ -42,7 +42,7 @@ if [ $IS_COMMON_UPDATED -gt 0 ] ; then
 
   exit 0
 fi
-
+# If in message there is [ redeploy-all ] phase, re-deploying all services
 if [ $IS_REDEPLOY -gt 0 ] ; then
   echo "Re-deploy requested, re-deploying all services..."
   if [ "$ACTION" == "build" ]; then
@@ -54,7 +54,7 @@ if [ $IS_REDEPLOY -gt 0 ] ; then
   exit 0
 fi
 
-
+#PARTIAL BUILD - checking which files are changed building and deploying those services which are changed.
 git diff --name-only  $2 $3 |
 grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
 while read -r  line ; do

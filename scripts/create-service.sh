@@ -29,10 +29,13 @@ provider:
   name: aws
   runtime: go1.x
   region: \${self:custom.region}
+  profile: \${self:custom.profiles.\${self:provider.stage}}
   stage: dev
   tracing:
     apiGateway: true
     lambda: true
+  apiGateway:
+    \${file(../../shared/resources/agw/agwId.yml):apiGateway}
   environment:
     stage: \${self:custom.stage}
     resourcesStage: \${self:custom.resourcesStage}
