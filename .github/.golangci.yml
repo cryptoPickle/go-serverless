@@ -108,11 +108,6 @@ linters-settings:
     suggest-new: true
   misspell:
     locale: UK
-  nolintlint:
-    allow-unused: false
-    allow-leading-space: true
-    require-explanation: false
-    require-specific: true
   rowserrcheck:
     packages:
       - github.com/jmoiron/sqlx
@@ -143,7 +138,6 @@ linters:
     - lll
     - misspell
     - nakedret
-    - nolintlint
     - rowserrcheck
     - scopelint
     - staticcheck
