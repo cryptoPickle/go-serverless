@@ -9,8 +9,9 @@ ACTION=$1
 
 
 function buildeploy() {
+  echo "here"
   for d in $(find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
-    if [ "$ACTION" == "build" ] ; then echo "..." ; else cd "$d" || exit 1 ; sls deploy; fi
+    if [ "$ACTION" == "build" ] ; then echo "..." ; else cd "$d" ; sls deploy; fi
   done
   cd - > /dev/null
   for d in $(find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print ); do
@@ -18,17 +19,17 @@ function buildeploy() {
   done
 }
 
-IS_COMMON_UPDATED=$(git diff --name-only  $2 $3 | grep -e "services/common" -e "shared/deployments" | wc -l)
-COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA | grep -c -F '[ redeploy-all ]' )
 
 
-if [ $IS_COMMON_UPDATED -gt 0 ] ; then
+echo $IS_COMMON_UPDATED
+echo $COMMIT_MESSAGE
+if [[ $IS_COMMON_UPDATED -gt 0 ]] ; then
   echo "Common packages updated, redeploying all services"
   buildeploy
   exit 0
 fi
 
-if [ $COMMIT_MESSAGE -gt 0 ] ; then
+if [[ $COMMIT_MESSAGE -gt 0 ]] ; then
   echo "Re-deploy requested, re-deploying all services..."
   buildeploy
   exit 0
