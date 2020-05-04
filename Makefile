@@ -1,2 +1,5 @@
 create-service:
-	bash ./scripts/create-service.sh ${name}
+	./scripts/create-service.sh ${name}
+
+format:
+	./scripts/fmt.sh

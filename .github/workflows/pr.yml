@@ -1,0 +1,38 @@
+name: PR
+on:
+  - pull_request
+
+
+jobs:
+  label:
+    name: Label PR
+    runs-on: ubuntu-latest
+    steps:
+    - name: Auto Label Pull Request
+      uses: actions/labeler@v2
+      with:
+        repo-token: "${{secrets.GITHUB_TOKEN}}"
+        configuration-path: .github/actions/pull/labels.yml
+  go-fmt:
+    name: Imports
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: check
+        uses: grandcolline/golang-github-actions@v1.1.0
+        with:
+          run: fmt
+          comment: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  golangci-lint:
+    name: runner / golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+      - name: golangci-lint
+        uses: docker://reviewdog/action-golangci-lint:v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          golangci_lint_flags: "--config=.golangci.yml"
