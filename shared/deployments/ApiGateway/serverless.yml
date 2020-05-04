@@ -1,5 +1,4 @@
 service: Gateway
-
 custom: ${file(../../common/serverless.common.yml):custom}
 
 provider:

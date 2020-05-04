@@ -19,8 +19,7 @@ function buildeploy() {
 }
 
 IS_COMMON_UPDATED=$(git diff --name-only  $2 $3 | grep -e "services/common" -e "shared/deployments" | wc -l)
-COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 $GITHUB_SHA | grep '[ redeploy-all ]' | wc -l)
-
+COMMIT_MESSAGE=$(git log --format=%B -n 1 $GITHUB_SHA | grep -c -F '[ redeploy-all ]' )
 
 
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
