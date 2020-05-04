@@ -40,5 +40,5 @@ jobs:
       run: ./scripts/configure-creds.sh ${{secrets.AWS_ACCESS_KEY_ID}} ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Serverless Deploy
-      run: ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
+      run: sudo ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
 
