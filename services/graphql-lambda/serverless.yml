@@ -19,6 +19,8 @@ provider:
   runtime: go1.x
   region: ${self:custom.region}
   stage: dev
+  apiGateway:
+    ${file(../../shared/resources/agw/agwId.yml):apiGateway}
   tracing:
     apiGateway: true
     lambda: true
@@ -40,5 +42,3 @@ functions:
 
 resources:
   - *commonconfig
-  #  Create Base API, rest of the services depends on this service, deploy first
-  - ${file(../../shared/resources/agw/base_api.yml)}

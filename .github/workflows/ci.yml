@@ -35,10 +35,11 @@ jobs:
     - name: Build
       run: bash ./scripts/build-deploy.sh build
 
-    - name: Serverless Deploy
-      run: bash ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
-
     - name: Dump GitHub context
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
+
+    - name: Serverless Deploy
+      run: bash ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
+

@@ -12,8 +12,10 @@ function buildeploy() {
   done
 }
 
-IS_COMMON_UPDATED=$(git diff --name-only  $2 $3 | grep "services/common" | wc -l)
+IS_COMMON_UPDATED=$(git diff --name-only  $2 $3 | grep -e "services/common" -e "resources/deployments" | wc -l)
 COMMIT_MESSAGE=$(git --no-pager log --format=%B -n 1 $GITHUB_SHA )
+
+
 echo "MESSAGE $COMMIT_MESSAGE"
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
   echo "Common packages updated, redeploying all services"
