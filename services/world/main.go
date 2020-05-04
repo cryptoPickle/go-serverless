@@ -13,7 +13,7 @@ import (
 // AWS Lambda Proxy Request functionality (default behavior)
 //
 // https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
-var badname int
+
 
 type Response events.APIGatewayProxyResponse
 
