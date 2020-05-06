@@ -66,7 +66,6 @@ echo "::set-output name=deploy::true"
 DIFF=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
 
 
-echo "here"
 while read -r  line ; do
   RESOURCES+=("$(dirname $line)")
 done <<< "$( echo -e "$DIFF")"
