@@ -11,6 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - uses: actions/cache@v1
+      id: cache
+      with:
+        path: ~/$GOPATH/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
     - name: Set up Go 1.x
       uses: actions/setup-go@v2
       with:
@@ -34,12 +42,7 @@ jobs:
     - name: Debug
       run:  cd $GOPATH/pkg/mod ; ls
 
-    - uses: actions/cache@v1
-      with:
-        path: ~/$GOPATH/pkg/mod
-        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-
+
 
   build:
     needs: unitTest
@@ -63,8 +66,11 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 10
+    - name: Debug
+      run: cd ~/go/pkg/mod; ls
 
     - uses: actions/cache@v1
+      id: cache
       with:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
