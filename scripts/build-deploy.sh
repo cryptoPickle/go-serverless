@@ -9,7 +9,7 @@ fi
 ACTION=$1
 IS_COMMON_UPDATED=$(git diff --name-only  "$2" "$3" | grep -e "services/common" -e "shared/deployments" | wc -l)
 IS_REDEPLOY=$(git log --format=%B -n 1 $3 | grep  -F '[ redeploy-all ]' | wc -l )
-
+echo "::set-output name=deploy::true"
 function deployResources(){
   find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
     cd "$directory" ; sls deploy;
@@ -62,7 +62,7 @@ if [ $CHANGE_COUNT -eq 0 ]; then
   printf "\e[1;31m No change on services found exiting... \e[1;0m"
   exit 0
 fi
-echo "::set-output name=deploy::true"
+
 DIFF=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
 
 
