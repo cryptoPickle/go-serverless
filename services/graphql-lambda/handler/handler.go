@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	ErrQueryNameNotProvided = errors.New("no query was provided in the HTTP body")
+	ErrQueryNameNotProvided = errors.New("no query was provided in the HTTP bodys")
 )
 
 type Response events.APIGatewayProxyResponse
