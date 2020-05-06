@@ -78,14 +78,14 @@ jobs:
       run: echo  ${{steps.build.outputs.deploy}}
 
     - name: Install Serverless Plugins
-      if: steps.id.outputs.deploy == true
+      if: steps.id.outputs.deploy == 'true'
       run: sudo npm i serverless -g
 
     - name: Configure-Creds
-      if: steps.id.outputs.deploy == true
+      if: steps.id.outputs.deploy == 'true'
       run: ./scripts/configure-creds.sh ${{secrets.AWS_ACCESS_KEY_ID}} ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Serverless Deploy
-      if: steps.id.outputs.deploy == true
+      if: steps.id.outputs.deploy == 'true'
       run: sudo ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
 
