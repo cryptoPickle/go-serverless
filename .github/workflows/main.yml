@@ -21,8 +21,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 10
-    - name: Debug
-      run: ls
+
     - uses: actions/cache@v1
       id: cache
       with:
@@ -34,8 +33,6 @@ jobs:
     - name: Run Unit Tests
       run: ./scripts/run-unit-tests.sh
 
-    - name: Debug
-      run:  cd ~/go/pkg ; ls
 
 
 
@@ -55,8 +52,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 10
-    - name: Debug
-      run: ls
+
     - uses: actions/cache@v1
       id: cache
       with:
@@ -68,9 +64,6 @@ jobs:
     - name: Build
       run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
       id: build
-
-    - name: Debug
-      run: cd ~/go/pkg; ls
 
     - name: Install Serverless Plugins
       if: ${{steps.build.outputs.deploy == 'true'}}
