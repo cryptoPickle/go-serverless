@@ -27,15 +27,15 @@ jobs:
       id: cache
       with:
         path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-v0-${{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-go-v1-
+          ${{ runner.os }}-go-v0-
 
     - name: Run Unit Tests
       run: ./scripts/run-unit-tests.sh
 
     - name: Debug
-      run:  cd ~/go ; ls
+      run:  cd ~/go/pkg ; ls
 
 
 
@@ -61,9 +61,9 @@ jobs:
       id: cache
       with:
         path: ~/go/pkg/mod
-        key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
+        key: ${{ runner.os }}-go-v0-${{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-go-v1-
+          ${{ runner.os }}-go-v0-
 
     - name: Build
       run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
