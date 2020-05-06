@@ -31,7 +31,7 @@ jobs:
     - uses: actions/cache@v1
       id: cache
       with:
-        path: ~/go/pkg/mod
+        path: ~/$HOME/pkg/mod
         key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-v1-
@@ -70,7 +70,7 @@ jobs:
     - uses: actions/cache@v1
       id: cache
       with:
-        path: ~/go/pkg/mod
+        path: ~/$HOME/pkg/mod
         key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-v1-
@@ -80,7 +80,7 @@ jobs:
       id: build
 
     - name: Debug
-      run: cd ~/go/pkg/mod/cache; ls
+      run: cd ~/go/pkg; ls
 
     - name: Install Serverless Plugins
       if: ${{steps.build.outputs.deploy == 'true'}}
