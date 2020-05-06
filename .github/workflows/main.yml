@@ -34,7 +34,7 @@ jobs:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-go-v1
+          ${{ runner.os }}-go-v1-
 
     - name: Run Unit Tests
       run: ./scripts/run-unit-tests.sh
@@ -73,13 +73,14 @@ jobs:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
         restore-keys: |
-          ${{ runner.os }}-go-v1
-    - name: Debug
-      run: cd ~/go/pkg/mod; ls
+          ${{ runner.os }}-go-v1-
 
     - name: Build
       run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
       id: build
+
+    - name: Debug
+      run: cd ~/go/pkg/mod/cache; ls
 
     - name: Install Serverless Plugins
       if: ${{steps.build.outputs.deploy == 'true'}}
