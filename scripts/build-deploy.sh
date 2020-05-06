@@ -55,9 +55,18 @@ if [ $IS_REDEPLOY -gt 0 ] ; then
 fi
 
 #PARTIAL BUILD - checking which files are changed building and deploying those services which are changed.
-git diff --name-only  $2 $3 |
-grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::' | sort | uniq |
+
+RESOURCES=()
+DIFF=$( git diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
+
+
 while read -r  line ; do
+  RESOURCES+=("$(dirname $line)")
+done <<< "$( echo -e "$DIFF")"
+
+
+for line in $(echo "${RESOURCES[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
+do
   if [ -d "../$line" ]; then
     if [ -f "../$line/serverless.yml" ] ; then
       echo "deploying $line ..."
