@@ -17,21 +17,16 @@ jobs:
         go-version: ^1.13
       id: go
 
-    - name: Set GOPATH
-      run: |
-        echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
-        echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
-      shell: bash
-
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
       with:
         fetch-depth: 10
-
+    - name: Debug
+      run: ls
     - uses: actions/cache@v1
       id: cache
       with:
-        path: ~/$HOME/pkg/mod
+        path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-v1-
@@ -56,21 +51,16 @@ jobs:
         go-version: ^1.13
       id: go
 
-    - name: Set GOPATH
-      run: |
-        echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
-        echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
-      shell: bash
-
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
       with:
         fetch-depth: 10
-
+    - name: Debug
+      run: ls
     - uses: actions/cache@v1
       id: cache
       with:
-        path: ~/$HOME/pkg/mod
+        path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-v1-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-v1-
