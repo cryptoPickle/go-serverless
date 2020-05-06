@@ -16,7 +16,7 @@ func Handler(ctx context.Context, request *events.APIGatewayProxyRequest) (Respo
 	var buf bytes.Buffer
 
 	body, err := json.Marshal(map[string]interface{}{
-		"message": "Go Serverless v1.0! Your function executed successful!",
+		"message": "Go Serverless v1.0! Your function executed successfuls!",
 	})
 	if err != nil {
 		return Response{StatusCode: constants.StatusCodes["NotFound"]}, err

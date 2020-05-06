@@ -31,6 +31,9 @@ jobs:
     - name: Run Unit Tests
       run: ./scripts/run-unit-tests.sh
 
+    - name: Debug
+      run: ls | cd $GOPATH | ls
+
     - uses: actions/cache@v1
       with:
         path: ~/go/pkg/mod
