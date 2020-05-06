@@ -87,6 +87,8 @@ jobs:
       run: sudo ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
   deploy:
     needs: build
+    name: Deploy
+    runs-on: ubuntu-latest
     steps:
       - name: Debug
         run: echo ${{steps.build.outputs.deploy}}
