@@ -73,7 +73,7 @@ do
          printf "\e[1;33m $line \e[1;0m\n"
          make build -C "../$line" ;
          else
-          printf "\e[31m Deployin... \e[0m"
+          printf "\e[31m Deploying... \e[0m"
           printf "\e[1;33m $line \e[1;0m\n"
           make deploy -C "../$line" ;
       fi
