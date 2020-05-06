@@ -14,18 +14,24 @@ echo "::set-output name=deploy::true"
 
 function deployResources(){
   find ../shared/deployments -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
+    printf "\e[31m Deploying... \e[0m"
+    printf "\e[1;33m $directory \e[1;0m\n"
     cd "$directory" ; sls deploy;
   done
 }
 
 function buildServices(){
   find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
+    printf "\e[31m Building... \e[0m"
+    printf "\e[1;33m $directory \e[1;0m\n"
     make build -C "$directory"
   done
 }
 
 function deployServices(){
   find ../services -type d -exec sh -c '[ -f "$0"/serverless.yml ]' '{}' \; -print | while read directory; do
+    printf "\e[31m Deploying... \e[0m"
+    printf "\e[1;33m $directory \e[1;0m\n"
     make deploy -C "$directory"
   done
 }

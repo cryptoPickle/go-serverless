@@ -1,6 +1,7 @@
 service: Gateway
 custom: ${file(../../common/serverless.common.yml):custom}
 
+
 provider:
   name: aws
   runtime: go1.x
