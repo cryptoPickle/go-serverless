@@ -67,7 +67,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: my-artifact
-        path: services/to/artifact/**/[bin]/*
+        path: services/**/[bin]/*
 
     - name: Install Serverless Plugins
       if: ${{steps.build.outputs.deploy == 'true'}}
