@@ -64,9 +64,10 @@ jobs:
       run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
       id: build
 
-    - uses: actions/upload-artifact@v2
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v2
       with:
-        name: my-artifact
+        name: build
         path: services/**/bin/*
 
     - name: Install Serverless Plugins
