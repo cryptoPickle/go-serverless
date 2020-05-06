@@ -39,7 +39,7 @@ func Handler(ctx context.Context, request *events.APIGatewayProxyRequest) (Respo
 	responseJSON, err := json.Marshal(response)
 
 	if err != nil {
-		log.Println("Could not decode body")
+		log.Println("Could not decode bodys")
 	}
 
 	return Response{

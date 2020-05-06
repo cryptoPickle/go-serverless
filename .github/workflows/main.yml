@@ -32,11 +32,11 @@ jobs:
       run: ./scripts/run-unit-tests.sh
 
     - name: Debug
-      run:  cd $GOPATH ; ls
+      run:  cd $GOPATH/pkg ; ls
 
     - uses: actions/cache@v1
       with:
-        path: ~/$GOPATH/pkg/mod
+        path: ~/$GOPATH/pkg
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-

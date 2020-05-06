@@ -6,12 +6,7 @@ if [ $# -eq 0 ] ; then
   exit 1
 fi
 
-bold=$(tput bold)
-normal=$(tput sgr0)
-color=$(tput setaf 2)
-echo "${bold}$(tput setaf 2) this is bold$(tput setaf 0) but this isn't ${normal}"
 ACTION=$1
-
 IS_COMMON_UPDATED=$(git diff --name-only  "$2" "$3" | grep -e "services/common" -e "shared/deployments" | wc -l)
 IS_REDEPLOY=$(git log --format=%B -n 1 $3 | grep  -F '[ redeploy-all ]' | wc -l )
 
@@ -35,7 +30,7 @@ function deployServices(){
 
 # If common packages or services updated, all services re deploys
 if [ $IS_COMMON_UPDATED -gt 0 ] ; then
-  echo "${bold}$(tput setaf 5) Common packages updated, redeploying all services ${normal}"
+  printf "\e[1;33m Common packages updated, redeploying all services \e[1;0m\n"
   if [ "$ACTION" == "build" ]; then
      buildServices
     else
@@ -47,7 +42,8 @@ if [ $IS_COMMON_UPDATED -gt 0 ] ; then
 fi
 # If in message there is [ redeploy-all ] phase, re-deploying all services
 if [ $IS_REDEPLOY -gt 0 ] ; then
-  echo "${bold}$(tput setaf 5) "Re-deploy requested, re-deploying all services..." ${normal}"
+  printf "\e[1;33m Re-deploy requested, re-deploying all services...\e[1;0m\n"
+  echo "${bold}$(tput setaf 5)  ${normal}"
   if [ "$ACTION" == "build" ]; then
      buildServices
     else
@@ -73,12 +69,16 @@ do
   if [ -d "../$line" ]; then
     if [ -f "../$line/serverless.yml" ] ; then
        if [ "$ACTION" == "build" ] ; then
-         echo "${bold}$(tput setaf 5) Building... $(tput setaf 3) $line ${normal}"
+         printf "\e[31m Building... \e[0m"
+         printf "\e[1;33m $line \e[1;0m\n"
          make build -C "../$line" ;
          else
-           echo "${bold}$(tput setaf 9) Deploying... $(tput setaf 11) $line ${normal}"
-           make deploy -C "../$line" ;
+          printf "\e[31m Deployin... \e[0m"
+          printf "\e[1;33m $line \e[1;0m\n"
+          make deploy -C "../$line" ;
       fi
     fi
   fi
 done
+
+#\e[1;31m \e[1;0m\n
