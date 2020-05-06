@@ -82,10 +82,10 @@ jobs:
       run: sudo npm i serverless -g
 
     - name: Configure-Creds
-      if: steps.build.outputs.deploy == 'true'
+      if: ${{steps.build.outputs.deploy == 'true'}}
       run: ./scripts/configure-creds.sh ${{secrets.AWS_ACCESS_KEY_ID}} ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Serverless Deploy
-      if: steps.build.outputs.deploy == true
+      if: ${{steps.build.outputs.deploy == 'true'}}
       run: sudo ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
 
