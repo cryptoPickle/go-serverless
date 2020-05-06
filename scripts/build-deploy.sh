@@ -58,9 +58,11 @@ RESOURCES=()
 CHANGE_COUNT=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" | wc -l)
 
 if [ $CHANGE_COUNT -eq 0 ]; then
+  echo "::set-output name=deploy::false"
   printf "\e[1;31m No change on services found exiting... \e[1;0m"
   exit 0
 fi
+echo "::set-output name=deploy::true"
 DIFF=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
 
 
@@ -86,5 +88,3 @@ do
     fi
   fi
 done
-
-#\e[1;31m \e[1;0m\n
