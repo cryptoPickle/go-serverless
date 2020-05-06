@@ -2,12 +2,15 @@
 
 if [ $# -eq 0 ] ; then
   echo 'Usage: create-service serviceName'
+  exit 1
 fi
 
 SERVICE_NAME=$1
 SERVICE_PATH=./services/$SERVICE_NAME
 
 mkdir -p $SERVICE_PATH
+mkdir -p $SERVICE_PATH/handler
+mkdir -p $SERVICE_PATH/tests
 
 cat > $SERVICE_PATH/serverless.yml <<EOF_YML
 service: ${SERVICE_NAME}
@@ -62,31 +65,44 @@ cat > $SERVICE_PATH/main.go <<EOF_GO
 package main
 
 import (
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/cryptoPickle/go-serverless/services/hello/handler"
+)
+
+func main() {
+	lambda.Start(handler.Handler)
+}
+
+EOF_GO
+
+cat > $SERVICE_PATH/handler/handler.go <<EOF_GO
+package handler
+
+import (
 	"bytes"
 	"context"
 	"encoding/json"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/aws/aws-lambda-go/lambda"
+
+	"github.com/cryptoPickle/go-serverless/services/common/constants"
 )
 
-// https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
 type Response events.APIGatewayProxyResponse
 
-// Handler is our lambda handler invoked by the "lambda.Start" function call
-func Handler(ctx context.Context) (Response, error) {
+func Handler(ctx context.Context, request *events.APIGatewayProxyRequest) (Response, error) {
 	var buf bytes.Buffer
 
 	body, err := json.Marshal(map[string]interface{}{
-		"message": "Go Serverless v1.0! Your ${SERVICE_NAME} function executed successfully!",
+		"message": "Go Serverless v1.0! Your function executed successful!",
 	})
 	if err != nil {
-		return Response{StatusCode: 404}, err
+		return Response{StatusCode: constants.StatusCodes["NotFound"]}, err
 	}
 	json.HTMLEscape(&buf, body)
 
 	resp := Response{
-		StatusCode:      200,
+		StatusCode:      constants.StatusCodes["Ok"],
 		IsBase64Encoded: false,
 		Body:            buf.String(),
 		Headers: map[string]string{
@@ -97,11 +113,46 @@ func Handler(ctx context.Context) (Response, error) {
 
 	return resp, nil
 }
-
-func main() {
-	lambda.Start(Handler)
-}
 EOF_GO
+
+cat > $SERVICE_PATH/tests/handler_test.go <<EOF_GO
+package handler_test
+
+import (
+	"context"
+	"testing"
+
+	"github.com/aws/aws-lambda-go/events"
+	"github.com/cryptoPickle/go-serverless/services/${SERVICE_NAME}/handler"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+)
+
+var _ = Describe("${SERVICE_NAME} service test", func() {
+	It("Should return response correctly", func() {
+		test := struct {
+			expect string
+		}{
+			expect: "{\"message\":\"Go Serverless v1.0! Your function executed successful!\"}",
+		}
+
+		request := events.APIGatewayProxyRequest{}
+		response, err := handler.Handler(context.TODO(), &request)
+		Expect(err).To(BeNil())
+		Expect(response.Body).To(Equal(test.expect))
+
+	})
+})
+
+func TestSo(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "${SERVICE_NAME} Service Test Suite")
+}
+
+EOF_GO
+
+
 
 cat > $SERVICE_PATH/Makefile <<EOF_MAKEFILE
   .PHONY: build clean deploy

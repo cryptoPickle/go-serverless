@@ -6,8 +6,33 @@ on:
       - master
 
 jobs:
+  unitTest:
+    name: Unit-Test
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.13
+      id: go
+
+    - name: Set GOPATH
+      run: |
+        echo "##[set-env name=GOPATH;]$(dirname $GITHUB_WORKSPACE)"
+        echo "##[add-path]$(dirname $GITHUB_WORKSPACE)/bin"
+      shell: bash
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 10
+
+    - name: Run Unit Tests
+      run: ./scripts/run-unit-tests.sh
 
   build:
+    needs: unitTest
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +58,7 @@ jobs:
       run: sudo npm i serverless -g
 
     - name: Build
-      run: bash ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
+      run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
 
 
     - name: Configure-Creds
