@@ -54,11 +54,17 @@ if [ $IS_REDEPLOY -gt 0 ] ; then
 fi
 
 #PARTIAL BUILD - checking which files are changed building and deploying those services which are changed.
-
 RESOURCES=()
-DIFF=$( git diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
+CHANGE_COUNT=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" | wc -l)
+
+if [ $CHANGE_COUNT -eq 0 ]; then
+  printf "\e[1;31m No change on services found exiting... \e[1;0m"
+  exit 0
+fi
+DIFF=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
 
 
+echo "here"
 while read -r  line ; do
   RESOURCES+=("$(dirname $line)")
 done <<< "$( echo -e "$DIFF")"
