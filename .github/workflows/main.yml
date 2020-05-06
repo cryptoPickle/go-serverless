@@ -74,6 +74,9 @@ jobs:
       run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
       id: build
 
+    - name: Debug
+        run: echo  ${{steps.build.outputs.deploy}}
+
     - name: Install Serverless Plugins
       if: ${{steps.build.outputs.deploy}} === 'true'
       run: sudo npm i serverless -g
