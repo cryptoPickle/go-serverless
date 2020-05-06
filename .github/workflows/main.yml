@@ -65,7 +65,6 @@ jobs:
       id: build
 
     - uses: actions/upload-artifact@v2
-      if: failure()
       with:
         name: my-artifact
         path: services/to/artifact/**/[bin]/*
