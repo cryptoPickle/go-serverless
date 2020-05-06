@@ -35,7 +35,7 @@ jobs:
       run: ./scripts/run-unit-tests.sh
 
     - name: Debug
-      run:  cd $GOPATH/pkg/mod ; ls
+      run:  cd ~/go ; ls
 
 
 
