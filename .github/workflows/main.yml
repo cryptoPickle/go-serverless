@@ -75,7 +75,7 @@ jobs:
       id: build
 
     - name: Debug
-      run: echo  steps.id.outputs.deploy
+      run: echo   ${{steps.id.outputs.deploy}}
 
     - name: Install Serverless Plugins
       if: ${{steps.id.outputs.deploy == true}}
