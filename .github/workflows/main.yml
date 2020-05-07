@@ -34,7 +34,6 @@ jobs:
       run: ./scripts/run-unit-tests.sh
 
 
-
   buildAndDeploy:
     needs: unitTest
     name: Build And Deploy
@@ -82,6 +81,7 @@ jobs:
       with:
         name: build
         path: services/**/bin/*
+
 
   create_relase:
     needs: buildAndDeploy
