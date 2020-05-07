@@ -84,6 +84,11 @@ jobs:
         path: services/**/bin/*
 
   create_relase:
+    needs: buildAndDeploy
+    name: Create Relase
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Create Release
       uses: actions/create-release@v1
       env:
