@@ -35,7 +35,7 @@ jobs:
 
 
 
-  build:
+  buildAndDeploy:
     needs: unitTest
     name: Build And Deploy
     runs-on: ubuntu-latest
@@ -77,20 +77,13 @@ jobs:
       run: sudo ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
 
     - name: Upload Build Artifacts
-      if: ${{ success() }}
+      if: ${{ success() && steps.build.outputs.deploy == 'true' }}
       uses: actions/upload-artifact@v2
       with:
         name: build
         path: services/**/bin/*
 
-    - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Bump version and push tag
+      uses: mathieudutour/github-tag-action@v4
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: git --no-pager log --format=%B ${{ github.event.before }} ${{ github.sha }}
-        draft: false
-        prerelease: false
-
+        github_token: ${{ secrets.GITHUB_TOKEN }}
