@@ -53,7 +53,10 @@ jobs:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
         with:
-          fetch-depth: 10
+          fetch-depth: 0
+      - run: |
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+
 
       - uses: actions/cache@v1
         id: cache
@@ -63,5 +66,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-v0-
 
+
       - name: Run Unit Tests
-        run: ./scripts/run-unit-tests.sh
+        run: ./scripts/run-unit-tests.sh ${{github.event_name}} ${{github.base_ref}} ${{github.head_ref}}
