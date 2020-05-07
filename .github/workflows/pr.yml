@@ -64,4 +64,4 @@ jobs:
             ${{ runner.os }}-go-v0-
 
       - name: Run Unit Tests
-        run: ./scripts/run-unit-tests.sh
+        run: ./scripts/run-unit-tests.sh ${{github.event_name}} ${{ github.event.before }} ${{ github.sha }}

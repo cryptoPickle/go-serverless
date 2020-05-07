@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 cd "$(dirname "$0")"
+
+
 if [ $# -eq 0 ] ; then
   echo "Usage: ./build-deploy [buid|deploy] sha1 sha2"
   exit 1
