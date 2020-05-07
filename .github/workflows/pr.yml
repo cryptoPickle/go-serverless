@@ -70,7 +70,7 @@ jobs:
         run: echo ${{github.head_ref}}
 
       - name: Debug
-        run: git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD master)
+        run: echo ${{github.base_ref}}
 
       - name: Run Unit Tests
         run: ./scripts/run-unit-tests.sh ${{github.event_name}} ${{ github.event.before }} ${{ github.sha }}
