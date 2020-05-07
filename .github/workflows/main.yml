@@ -83,9 +83,5 @@ jobs:
         name: build
         path: services/**/bin/*
 
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.17.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true
-        INITIAL_VERSION: 0.0.0
+    - name: Create Realase Tag
+      runs: ./scripts/create_tag.sh
