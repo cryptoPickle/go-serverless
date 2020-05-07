@@ -4,12 +4,10 @@ on:
     tags:
       - 'v*'
 
-
 jobs:
   create_realase:
-    needs: buildAndDeploy
     name: Create Realase
-    runs-on: ubunti-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
