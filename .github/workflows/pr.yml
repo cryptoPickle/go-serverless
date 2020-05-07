@@ -63,14 +63,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-v0-
 
-      - name: DebugRef
-        run: echo ${{github.ref}}
-
-      - name: Debug
-        run: echo ${{github.head_ref}}
-
-      - name: Debug
-        run: echo ${{github.base_ref}}
 
       - name: Run Unit Tests
-        run: ./scripts/run-unit-tests.sh ${{github.event_name}} ${{ github.event.before }} ${{ github.sha }}
+        run: ./scripts/run-unit-tests.sh ${{github.event_name}} ${{github.base_ref}} ${{github.head_ref}}
