@@ -2,7 +2,7 @@ name: Create Realase
 on:
   push:
     tags:
-      - 'v*'
+      - 'build_*'
 
 jobs:
   create_realase:
