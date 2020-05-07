@@ -4,7 +4,7 @@ set -e
 cd "$(dirname "$0")"
 
 EVENT_NAME=$1
-
+git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
 
 function runPartialTest() {
   while read -r  line ; do
