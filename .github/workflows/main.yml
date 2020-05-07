@@ -84,6 +84,8 @@ jobs:
         path: services/**/bin/*
 
     - name: Bump version and push tag
-      uses: mathieudutour/github-tag-action@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+      uses: anothrNick/github-tag-action@1.17.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+        INITIAL_VERSION: 0.0.0
