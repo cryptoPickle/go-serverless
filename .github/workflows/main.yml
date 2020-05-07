@@ -96,7 +96,7 @@ jobs:
 
     - name: Outputs
       id: out
-      run: ./script/crate_tag.sh
+      run: ./script/create_tag.sh
 
     - name: Create Release
       uses: actions/create-release@v1
