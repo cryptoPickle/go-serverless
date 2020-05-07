@@ -23,6 +23,7 @@ function runPartialTest() {
 if [ "$EVENT_NAME" == 'pull_request' ]; then
       RESOURCES=()
       DIFF=$( git --no-pager diff --name-only  "origin/$2" "origin/$3" | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
+      git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
       runPartialTest
   else
     find ../services -name "*_test.go" -type f | while read -r service; do
