@@ -64,12 +64,6 @@ jobs:
       run: ./scripts/build-deploy.sh build ${{ github.event.before }} ${{ github.sha }}
       id: build
 
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        path: services/**/bin/*
-
     - name: Install Serverless Plugins
       if: ${{steps.build.outputs.deploy == 'true'}}
       run: sudo npm i serverless -g
@@ -81,4 +75,22 @@ jobs:
     - name: Serverless Deploy
       if: ${{steps.build.outputs.deploy == 'true'}}
       run: sudo ./scripts/build-deploy.sh deploy ${{ github.event.before }} ${{ github.sha }}
+
+    - name: Upload Build Artifacts
+      if: ${{ success() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: services/**/bin/*
+
+    - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: git --no-pager log --format=%B ${{ github.event.before }} ${{ github.sha }}
+          draft: false
+          prerelease: false
 
