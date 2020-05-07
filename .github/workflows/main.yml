@@ -20,7 +20,7 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
       with:
-        fetch-depth: 10
+        fetch-depth: 0
 
     - uses: actions/cache@v1
       id: cache
@@ -49,7 +49,7 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
       with:
-        fetch-depth: 10
+        fetch-depth: 0
 
     - uses: actions/cache@v1
       id: cache
@@ -92,7 +92,7 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
       with:
-        fetch-depth: 10
+        fetch-depth: 0
 
     - name: Outputs
       id: out
