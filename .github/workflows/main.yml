@@ -96,15 +96,15 @@ jobs:
 
     - name: Outputs
       id: out
-      run: ./scripts/create_tag.sh ${{ github.event.before }} ${{ github.sha }}
+      run: ./scripts/outputs.sh ${{ github.event.before }} ${{ github.sha }}
 
     - name: Create Release
       uses: actions/create-release@v1
+      if: ${{ success() && steps.out.outputs.skip == 'false' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.out.outputs.realaseName }}
         release_name: Release ${{ steps.out.outputs.realaseName }}
-        body:  ${{ steps.out.outputs.relaseBody }}
         draft: false
         prerelease: false
