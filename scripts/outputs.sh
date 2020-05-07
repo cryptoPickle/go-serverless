@@ -1,7 +1,7 @@
 #!/bin/bash
-CHANGE_COUNT=$( git --no-pager diff --name-only  $2 $3 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" | wc -l)
+CHANGE_COUNT=$( git --no-pager diff --name-only  $1 $2 | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" | wc -l)
 
-echo "::set-output name=skip::false"
+echo "::set-output name=realaseName::$(date +"%m-%d-%Y")"
 
 if [ $CHANGE_COUNT -eq 0 ]; then
   echo "::set-output name=skip::true"
@@ -9,5 +9,4 @@ if [ $CHANGE_COUNT -eq 0 ]; then
   exit 0
 fi
 
-echo "::set-output name=realaseName::$(date +"%m-%d-%Y")"
-echo "::set-output name=relaseBody::$(git --no-pager log --format=%B  $1 $2)"
+echo "::set-output name=skip::false"
