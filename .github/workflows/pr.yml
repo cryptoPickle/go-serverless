@@ -63,11 +63,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-v0-
 
-      - name: Debug
-        run: echo ${{github.event_name}}
+      - name: DebugRef
+        run: echo ${{github.ref}}
 
       - name: Debug
-        run: echo ${{github.event.before}}
+        run: echo ${{github.head_ref}}
 
       - name: Debug
         run: git --no-pager diff --name-only FETCH_HEAD $(git merge-base FETCH_HEAD master)
