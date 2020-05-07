@@ -84,4 +84,4 @@ jobs:
         path: services/**/bin/*
 
     - name: Create Realase Tag
-      runs: ./scripts/create_tag.sh
+      run: ./scripts/create_tag.sh
