@@ -96,7 +96,7 @@ jobs:
 
     - name: Outputs
       id: out
-      run: ./script/create_tag.sh
+      run: ./scripts/create_tag.sh ${{ github.event.before }} ${{ github.sha }}
 
     - name: Create Release
       uses: actions/create-release@v1
