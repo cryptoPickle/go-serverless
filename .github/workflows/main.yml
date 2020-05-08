@@ -36,7 +36,7 @@ jobs:
 
   buildAndDeploy:
     needs: unitTest
-    name: Build And Deploy
+    name: E2E test
     runs-on: ubuntu-latest
     steps:
 

@@ -21,3 +21,6 @@ ci:
 scripts:
   - scripts/*
   - scripts/*/**
+e2e:
+  - e2e/*
+  - e2e/*/**
