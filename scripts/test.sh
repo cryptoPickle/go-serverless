@@ -3,7 +3,8 @@
 set -e
 cd "$(dirname "$0")"
 
-EVENT_NAME=$1
+EVENT_NAME=$2
+IS_E2E=$1
 git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/master
 
 function runPartialTest() {
@@ -22,12 +23,18 @@ function runPartialTest() {
 
 if [ "$EVENT_NAME" == 'pull_request' ]; then
       RESOURCES=()
-      DIFF=$( git --no-pager diff --name-only  "origin/$2"..."origin/$3" | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
+      DIFF=$( git --no-pager diff --name-only  "origin/$3"..."origin/$4" | grep  -e ".*\.go$" -e ".*\.yml$" | sed 's:[^/]*$::'  | grep "services" )
       echo "$DIFF"
       runPartialTest
   else
-    find ../services -name "*_test.go" -type f | while read -r service; do
-      go test -v "$service"
-    done
+    if [ "$IS_E2E" == 'e2e' ] ; then
+        find ../e2e -name "*_test.go" -type f | while read -r service; do
+          go test -v "$service"
+        done
+      else
+        find ../services -name "*_test.go" -type f | while read -r service; do
+          go test -v "$service"
+        done
+    fi
 fi
 

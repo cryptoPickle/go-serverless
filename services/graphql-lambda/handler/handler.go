@@ -18,7 +18,7 @@ var (
 type Response events.APIGatewayProxyResponse
 
 func Handler(ctx context.Context, request *events.APIGatewayProxyRequest) (Response, error) {
-	log.Printf("Lambda request %s\n", request.RequestContext.RequestID)
+	log.Printf("Lambda req %s\n", request.RequestContext.RequestID)
 
 	if len(request.Body) < 1 {
 		return Response{}, ErrQueryNameNotProvided
