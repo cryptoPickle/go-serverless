@@ -31,7 +31,7 @@ jobs:
           ${{ runner.os }}-go-v0-
 
     - name: Run Unit Tests
-      run: ./scripts/run-unit-tests.sh
+      run: ./scripts/test.sh
 
 
   buildAndDeploy:
@@ -83,8 +83,28 @@ jobs:
         path: services/**/bin/*
 
 
+  e2eTest:
+    needs:  buildAndDeploy
+    name: Build And Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+
+    - name: Outputs
+      id: out
+      run: ./scripts/outputs.sh ${{ github.event.before }} ${{ github.sha }}
+
+    - name: Run Unit Tests
+      if: ${{ success() && steps.out.outputs.skip == 'false' }}
+      run: ./scripts/test.sh e2e
+
+
   create_relase:
-    needs: buildAndDeploy
+    needs: e2eTest
     name: Create Relase
     runs-on: ubuntu-latest
 

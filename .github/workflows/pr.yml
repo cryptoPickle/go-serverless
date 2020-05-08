@@ -68,4 +68,4 @@ jobs:
 
 
       - name: Run Unit Tests
-        run: ./scripts/run-unit-tests.sh ${{github.event_name}} ${{github.base_ref}} ${{github.head_ref}}
+        run: ./scripts/test.sh ${{github.event_name}} ${{github.base_ref}} ${{github.head_ref}}
