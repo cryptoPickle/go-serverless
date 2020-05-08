@@ -12,7 +12,7 @@ import (
 )
 
 type Client struct {
-	baseUrl *url.URL
+	baseURL *url.URL
 	client  *http.Client
 }
 
@@ -23,14 +23,14 @@ type Response struct {
 	Response   *http.Response
 }
 
-func NewRequestClient(baseurl string) *Client {
-	u1, err := url.Parse(baseurl)
+func NewRequestClient(baseURL string) *Client {
+	u1, err := url.Parse(baseURL)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	return &Client{
-		baseUrl: u1,
+		baseURL: u1,
 		client: &http.Client{
 			Transport: &http.Transport{
 				Dial: (&net.Dialer{
@@ -42,9 +42,9 @@ func NewRequestClient(baseurl string) *Client {
 	}
 }
 
-func (c *Client) Get(url string, headers map[string]string) (*Response, error) {
-	parseUrl := c.parseUrl(url)
-	req := createRequest("GET", parseUrl, headers, nil)
+func (c *Client) Get(urlPath string, headers map[string]string) (*Response, error) {
+	p := c.parseURL(urlPath)
+	req := createRequest("GET", p.String(), headers, nil)
 	res, err := c.makeRequest(req)
 	if err != nil {
 		return nil, err
@@ -59,13 +59,13 @@ func (c *Client) Get(url string, headers map[string]string) (*Response, error) {
 	}, nil
 }
 
-func (c *Client) Post(url string, body interface{}, headers map[string]string) (*Response, error) {
-	parseUrl := c.parseUrl(url)
+func (c *Client) Post(urlPath string, body interface{}, headers map[string]string) (*Response, error) {
+	p := c.parseURL(urlPath)
 	b, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
-	req := createRequest("POST", parseUrl, headers, b)
+	req := createRequest("POST", p.String(), headers, b)
 	res, err := c.makeRequest(req)
 
 	if err != nil {
@@ -79,16 +79,15 @@ func (c *Client) Post(url string, body interface{}, headers map[string]string) (
 		StatusCode: res.response.StatusCode,
 		Response:   res.response,
 	}, nil
-
 }
 
-func (c *Client) parseUrl(urlPath string) *url.URL {
+func (c *Client) parseURL(urlPath string) *url.URL {
 	path, err := url.Parse(urlPath)
 
 	if err != nil {
 		log.Fatal(err)
 	}
-	return c.baseUrl.ResolveReference(path)
+	return c.baseURL.ResolveReference(path)
 }
 
 type makeRequest struct {
@@ -116,9 +115,9 @@ func (c *Client) makeRequest(req *http.Request) (*makeRequest, error) {
 	}, nil
 }
 
-func createRequest(method string, url *url.URL, headers map[string]string, body []byte) *http.Request {
+func createRequest(method, u string, headers map[string]string, body []byte) *http.Request {
 	b := bytes.NewBuffer(body)
-	req, err := http.NewRequest(method, url.String(), b)
+	req, err := http.NewRequest(method, u, b)
 
 	if err != nil {
 		log.Fatal(err)

@@ -1,4 +1,4 @@
-package grahql_lambda
+package e2etest
 
 import (
 	"testing"

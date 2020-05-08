@@ -1,4 +1,4 @@
-package grahql_lambda
+package e2etest
 
 import (
 	"encoding/json"
@@ -19,7 +19,12 @@ var _ = Describe("graphql-lambda service e2e test", func() {
 		}
 
 		c := utils.Request()
-		res, err := c.Post("/dev/graphql-lambda", json.RawMessage(`{"query":"query test {\n  person(id:\"1000\") {\n    id\n    firstName\n  }\n}\n","variables":null,"operationName":"test"}`), nil)
+		res, err := c.Post(
+			"/dev/graphql-lambda",
+			json.RawMessage(
+				`{"query":"query test {\n  person(id:\"1000\") {\n    id\n firstName\n  }\n}\n","variables":null,"operationName":"test"}`,
+			),
+			nil)
 		Expect(err).To(BeNil())
 		Expect(test.expect).To(Equal(*res.Body))
 
