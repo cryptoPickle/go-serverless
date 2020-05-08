@@ -36,7 +36,7 @@ jobs:
 
   buildAndDeploy:
     needs: unitTest
-    name: E2E test
+    name: Build And Deploy
     runs-on: ubuntu-latest
     steps:
 
@@ -85,7 +85,7 @@ jobs:
 
   e2eTest:
     needs:  buildAndDeploy
-    name: Build And Deploy
+    name: E2E Test
     runs-on: ubuntu-latest
     steps:
     - name: Check out code into the Go module directory

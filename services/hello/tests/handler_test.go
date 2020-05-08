@@ -16,7 +16,7 @@ var _ = Describe("Hello service test", func() {
 		test := struct {
 			expect string
 		}{
-			expect: "{\"message\":\"Go Serverless v1.0! Your function executed successfully!\"}",
+			expect: "{\"message\":\"Go Serverless v1.0! Your function executed successful!\"}",
 		}
 
 		request := events.APIGatewayProxyRequest{}
