@@ -14,7 +14,7 @@ var _ = Describe("Hello service e2e test", func() {
 		test := struct {
 			expect string
 		}{
-			expect: "{\"message\":\"Go Serverless v1.0! Your function executed successful!\"}",
+			expect: "{\"message\":\"Go Serverless v1.0! Your function executed successfully!\"}",
 		}
 
 		c := utils.Request()
