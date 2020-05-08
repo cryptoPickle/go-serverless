@@ -93,6 +93,13 @@ jobs:
       with:
         fetch-depth: 0
 
+    - uses: actions/cache@v1
+      id: cache
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-v0-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-v0-
 
     - name: Outputs
       id: out
