@@ -11,7 +11,7 @@ function runPartialTest() {
   while read -r  line ; do
     RESOURCES+=("$(dirname $line)")
   done <<< "$( echo -e "$DIFF")"
-
+  echo $RESOURCES "here"
   for service in $(echo "${RESOURCES[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' ')
   do
     find "../$service" -name "*_test.go" -type f | while read -r testFile; do
@@ -19,7 +19,6 @@ function runPartialTest() {
     done
   done
 }
-
 
 if [ "$EVENT_NAME" == 'pull_request' ]; then
       RESOURCES=()
